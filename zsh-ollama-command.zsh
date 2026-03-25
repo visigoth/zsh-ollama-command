@@ -101,7 +101,10 @@ fzf_ollama_commands() {
   return $ret
 }
 
-validate_required
+# Validate requirements at startup unless disabled (saves ~30ms from pgrep + curl)
+if [[ -z "$ZSH_OLLAMA_DISABLE_STARTUP_VALIDATION" ]]; then
+  validate_required
+fi
 
 autoload fzf_ollama_commands
 zle -N fzf_ollama_commands
